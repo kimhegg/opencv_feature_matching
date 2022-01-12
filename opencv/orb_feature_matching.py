@@ -2,10 +2,10 @@ import time
 
 import cv2
 
-class FeatureMatching:
+class ORB_featureMatching:
 
     def runMatch(img):
-        img1 = cv2.imread('imagesTrain/ven_logo_verbal.png')
+        img1 = cv2.imread()
         img2 = cv2.cvtColor(img, cv2.IMREAD_GRAYSCALE)
 
         orb = cv2.ORB_create()
