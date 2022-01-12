@@ -49,7 +49,6 @@ class Sift_detector:
         images = []
         classNames = []
         myList = os.listdir(path)
-        print("Total classed detected", len(myList))
 
         for cl in myList:
             imgCur = cv.imread(f'{path}/{cl}', 0)
@@ -60,12 +59,6 @@ class Sift_detector:
         if id != -1:
             cv.putText(img,classNames[id],(50,50),cv.FONT_HERSHEY_COMPLEX,1,(0,0,255),1)
         cv.imshow("sad", img)
-
-
-
-
-
-
 
 
 
