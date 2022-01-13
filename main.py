@@ -1,3 +1,4 @@
+import sys
 import threading
 import cv2
 import time
@@ -7,8 +8,8 @@ from opencv.orb_feature_matching import ORB_featureMatching
 from opencv.sift_feature_matching import Sift_detector
 
 
-def sift_detector(frame):
-    Sift_detector.run(frame)
+def sift_detector(display_camera,frame):
+    Sift_detector.run(display_camera,frame)
 
 
 def saveFile(frame):
@@ -26,15 +27,24 @@ def feature_matching(frame):
 
 
 def readFromFilesystemStrategy():
+    ## Initiates OCR on saved images
     t = threading.Thread(target=Initiator.file_listener(), daemon=True)
     t.start()
 
 if __name__ == '__main__':
-    def videoCapture(saveFrames=False):
+    open_camera = False
+    if sys.argv and sys.argv[0] == 1:
+        open_camera = True
+    else:
+        print("Running no_display_output_mode")
+        print("Output will be displayed in console.")
+        open_camera = False
+
+    def videoCapture(display_camera=open_camera,saveFrames=False, interval_seconds=0.01):
         capture = cv2.VideoCapture(0)
         capture.set(3, 640)
         capture.set(4, 480)
-        interval_sec = 0.01
+        interval_sec = interval_seconds
         start_time = time.time()
         while True:
             ret, frame = capture.read()
@@ -47,7 +57,7 @@ if __name__ == '__main__':
                     saveFile(frame)
                     readFromFilesystemStrategy()
 
-                sift_detector(frame)
+                sift_detector(display_camera,frame)
                 start_time = time.time()
 
 

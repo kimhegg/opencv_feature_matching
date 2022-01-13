@@ -44,7 +44,7 @@ class Sift_detector:
         return desList
 
 
-    def run(img):
+    def run(display_camera,img):
         path = 'imagesTrain'
         images = []
         classNames = []
@@ -57,8 +57,13 @@ class Sift_detector:
         desList = Sift_detector.findDescriptor(images)
         id = Sift_detector.findID(img, desList)
         if id != -1:
-            cv.putText(img,classNames[id],(50,50),cv.FONT_HERSHEY_COMPLEX,1,(0,0,255),1)
-        cv.imshow("sad", img)
+            if display_camera:
+                cv.putText(img,classNames[id],(50,50),cv.FONT_HERSHEY_COMPLEX,1,(0,0,255),1)
+            else:
+                print('{}  identified.'.format(classNames[id]))
+
+        if display_camera:
+            cv.imshow("sad", img)
 
 
 
